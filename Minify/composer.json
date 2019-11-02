@@ -1,0 +1,6 @@
+{
+    "name": "damcclean/minify",
+    "require": {
+        "matthiasmullie/minify": "^1.3"
+    }
+}
