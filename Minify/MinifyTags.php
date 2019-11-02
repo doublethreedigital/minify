@@ -31,7 +31,7 @@ class MinifyTags extends Tags
     }
 
     /**
-     * {{ minify:css }}
+     * {{ minify:css }}.
      *
      * @return string
      */
@@ -41,7 +41,7 @@ class MinifyTags extends Tags
     }
 
     /**
-     * {{ minify:js }}
+     * {{ minify:js }}.
      *
      * @return string
      */
