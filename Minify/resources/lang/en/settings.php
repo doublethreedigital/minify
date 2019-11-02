@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'output' => 'Output Directory'
+    'output' => 'Output Directory',
 ];
