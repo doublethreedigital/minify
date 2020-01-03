@@ -1,9 +1,25 @@
 # Minify
-> Minify CSS & JS assets on the fly
 
-* Minify JavaScript
-* Minify Stylesheets
+> Minify CSS & JS assets on the fly.
 
-## 📄 Documentation
+## Installation
 
-Read the docs on the [Statamic Marketplace](https://statamic.com/marketplace/addons/minify/docs) or [make changes](https://github.com/damcclean/statamic-minify/blob/master/DOCUMENTATION.md) to it on Github.
+```shell script
+composer require doublethreedigital/minify
+```
+
+## Usage
+
+In v2, you can now minify assets from anywhere in your project. Just give us the relative path from the root of your project.
+
+### CSS
+
+```html
+<link rel="stylesheet" href="{{ minfiy:css src='/public/css/app.css' }}">
+```
+
+### JS
+
+```html
+<script src="{{ minify:js src='/public/js/app.js' }}"></script>
+```
