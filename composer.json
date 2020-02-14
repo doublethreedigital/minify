@@ -33,11 +33,11 @@
     },
     "require": {
         "matthiasmullie/minify": "dev-master",
-        "phpunit/phpunit": "^9.1@dev",
         "statamic/cms": "^3.0@beta"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0"
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^9.1@dev"
     },
     "minimum-stability": "dev",
     "scripts": {
@@ -45,7 +45,7 @@
             "php-cs-fixer fix ./src"
         ],
         "test": [
-            "vendor/bin/phpunit"
+            "php vendor/bin/phpunit --verbose"
         ]
     },
     "config": {
