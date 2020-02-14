@@ -45,7 +45,7 @@
             "php-cs-fixer fix ./src"
         ],
         "test": [
-            "php vendor/bin/phpunit --verbose"
+            "./vendor/bin/phpunit"
         ]
     },
     "config": {
