@@ -17,9 +17,9 @@ class MinifyTag extends Tags
 
         $minifier = new CSS($path);
 
-        Storage::disk('public')->put('something.css', $minifier->minify());
+        Storage::disk('public')->put(basename($this->getParam('src')), $minifier->minify());
 
-        return config('filesystems.disks.public.url').'/something.css';
+        return config('filesystems.disks.public.url').'/'.basename($this->getParam('src'));
     }
 
     public function js()
@@ -28,8 +28,8 @@ class MinifyTag extends Tags
 
         $minifier = new JS($path);
 
-        Storage::disk('public')->put('something.js', $minifier->minify());
+        Storage::disk('public')->put(basename($this->getParam('src')), $minifier->minify());
 
-        return config('filesystems.disks.public.url').'/something.js';
+        return config('filesystems.disks.public.url').'/'.basename($this->getParam('src'));
     }
 }

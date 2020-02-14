@@ -33,11 +33,11 @@ class MinifyTagTest extends TestCase
         $this->tag->setParameters(['src' => '/../resources/css/app.css']);
         $usage = $this->tag->css();
 
-        Storage::disk('public')->assertExists('something.css');
+        Storage::disk('public')->assertExists('app.css');
 
         $this->assertIsString($usage);
-        $this->assertSame($usage, '/storage/something.css');
-        $this->assertSame(Storage::disk('public')->get('something.css'), file_get_contents(__DIR__.'/__fixtures__/comparison/app.css'));
+        $this->assertSame($usage, '/storage/app.css');
+        $this->assertSame(Storage::disk('public')->get('app.css'), file_get_contents(__DIR__.'/__fixtures__/comparison/app.css'));
     }
 
     /** @test */
@@ -48,11 +48,11 @@ class MinifyTagTest extends TestCase
         $this->tag->setParameters(['src' => '/../resources/js/app.js']);
         $usage = $this->tag->js();
 
-        Storage::disk('public')->assertExists('something.js');
+        Storage::disk('public')->assertExists('app.js');
 
         $this->assertIsString($usage);
-        $this->assertSame($usage, '/storage/something.js');
-        $this->assertSame(Storage::disk('public')->get('something.js'), file_get_contents(__DIR__.'/__fixtures__/comparison/app.js'));
+        $this->assertSame($usage, '/storage/app.js');
+        $this->assertSame(Storage::disk('public')->get('app.js'), file_get_contents(__DIR__.'/__fixtures__/comparison/app.js'));
 
     }
 }
