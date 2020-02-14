@@ -1,0 +1,9 @@
+composer.lock
+vendor
+.DS_Store
+.phpunit.result.cache
+node_modules
+package-lock.json
+.php_cs.cache
+.idea
+phpunit.xml
