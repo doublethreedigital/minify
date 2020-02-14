@@ -33,6 +33,7 @@
     },
     "require": {
         "matthiasmullie/minify": "dev-master",
+        "phpunit/phpunit": "^9.1@dev",
         "statamic/cms": "^3.0@beta"
     },
     "require-dev": {
