@@ -67,10 +67,10 @@ class MinifyTags extends Tags
         $minifiedPath = "$this->basePath$this->publicPath/$this->output/$hash.$type";
         file_put_contents($minifiedPath, '');
 
-        if ($type = 'css') {
+        if ($type == 'css') {
             $minifier = new Minify\CSS($sourcePath);
             $minifier->minify($minifiedPath);
-        } elseif ($type = 'js') {
+        } elseif ($type == 'js') {
             $minifier = new Minify\JS($sourcePath);
             $minifier->minify($minifiedPath);
         }
