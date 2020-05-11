@@ -6,13 +6,11 @@ use Illuminate\Filesystem\Filesystem;
 use MatthiasMullie\Minify;
 use Statamic\API\Config;
 use Statamic\API\Crypt;
+use Statamic\API\Hash;
 use Statamic\Extend\Tags;
 
 class MinifyTags extends Tags
 {
-    /**
-     * MinifyTags constructor.
-     */
     public function __construct()
     {
         $this->filesystem = new Filesystem();
@@ -58,23 +56,48 @@ class MinifyTags extends Tags
      * @param $name
      * @return string
      */
-    public function minify($type, $name)
+    protected function minify(string $type, string $name)
     {
-        $sourceFilename = $name.'.'.$type;
-        $sourcePath = "$this->themePath/$type/$sourceFilename";
-        $hash = Crypt::encrypt($sourceFilename);
+        $sourceFileName = "$name.$type";
+        $sourceFilePath = "$this->themePath/$type/$sourceFileName";
+        $sourceContents = file_get_contents($sourceFilePath);
 
-        $minifiedPath = "$this->basePath$this->publicPath/$this->output/$hash.$type";
-        file_put_contents($minifiedPath, '');
+        $destinationPath = "$this->basePath$this->publicPath/$this->output/$sourceFileName";
+        $destinationUrl = "/$this->output/$sourceFileName";
 
-        if ($type == 'css') {
-            $minifier = new Minify\CSS($sourcePath);
-            $minifier->minify($minifiedPath);
-        } elseif ($type == 'js') {
-            $minifier = new Minify\JS($sourcePath);
-            $minifier->minify($minifiedPath);
+        if (! $this->hasBeenUpdated($sourceFileName, $sourceContents)) {
+            return $destinationUrl;
         }
 
-        return '/'.$this->output.'/'.$hash.'.'.$type;
+        file_put_contents($destinationPath, '');
+
+        switch ($type) {
+            case 'css':
+                $minifier = new Minify\CSS($sourceFilePath);
+                $minifier->minify($destinationPath);
+                break;
+
+            case 'js':
+                $minifier = new Minify\JS($sourceFilePath);
+                $minifier->minify($destinationPath);
+                break;
+        }
+
+        $this->updateAsset($sourceFileName, $sourceContents);
+
+        return $destinationUrl;
+    }
+
+    protected function hasBeenUpdated(string $key, string $contents)
+    {
+        $storedHash = $this->storage->getJSON("MINIFY_$key");
+        $currentHash = hash('sha256', $contents);
+
+        return $storedHash === $currentHash;
+    }
+
+    protected function updateAsset(string $key, string $contents)
+    {
+        $this->storage->putJSON("MINIFY_$key", hash('sha256', $contents));
     }
 }
