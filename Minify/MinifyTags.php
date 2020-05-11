@@ -3,6 +3,7 @@
 namespace Statamic\Addons\Minify;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use MatthiasMullie\Minify;
 use Statamic\API\Config;
 use Statamic\API\Crypt;
@@ -90,14 +91,18 @@ class MinifyTags extends Tags
 
     protected function hasBeenUpdated(string $key, string $contents)
     {
-        $storedHash = $this->storage->getJSON("MINIFY_$key");
+        $storedHash = $this->storage->getJSON(Str::slug($key));
         $currentHash = hash('sha256', $contents);
+
+        if (! $storedHash || ! $currentHash) {
+            return true;
+        }
 
         return $storedHash === $currentHash;
     }
 
     protected function updateAsset(string $key, string $contents)
     {
-        $this->storage->putJSON("MINIFY_$key", hash('sha256', $contents));
+        $this->storage->putJSON(Str::slug($key), hash('sha256', $contents));
     }
 }
