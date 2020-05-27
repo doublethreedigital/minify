@@ -17,6 +17,10 @@ class MinifyTag extends Tags
 
         $minifier = new CSS($path);
 
+        if ($this->getParam('inline')) {
+            return $minifier->minify();
+        }
+
         Storage::disk('public')->put(basename($this->getParam('src')), $minifier->minify());
 
         return config('filesystems.disks.public.url').'/'.basename($this->getParam('src'));
@@ -27,6 +31,10 @@ class MinifyTag extends Tags
         $path = realpath(public_path($this->getParam('src')));
 
         $minifier = new JS($path);
+
+        if ($this->getParam('inline')) {
+            return $minifier->minify();
+        }
 
         Storage::disk('public')->put(basename($this->getParam('src')), $minifier->minify());
 

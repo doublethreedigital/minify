@@ -34,6 +34,18 @@ To pull in a script, use the `minify:js` tag. Like the CSS tag, remember to incl
 
 > Minify has been known to have issues with some ES6 JavaScript stuff, please verify your site works before shipping to production.
 
+### Inline assets
+
+If you don't want the minified version of your assets to be stored in a file, you can get the contents of the minification inline.
+
+```html
+<!-- It works for both... styles -->
+<style>{{ minify:css src="css/site.css" inline="true" }}</style>
+
+<!-- And scripts -->
+<script>{{ minify:js src="js/site.js" inline="true" }}</script>
+```
+
 ## Resources
 
 * [Official Support](https://doublethree.digital)
