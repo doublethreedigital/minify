@@ -2,7 +2,9 @@
 
 namespace DoubleThreeDigital\Minify\Tags;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use MatthiasMullie\Minify\CSS;
 use MatthiasMullie\Minify\JS;
 use Statamic\Tags\Tags;
@@ -13,31 +15,63 @@ class MinifyTag extends Tags
 
     public function css()
     {
-        $path = realpath(public_path($this->getParam('src')));
-
-        $minifier = new CSS($path);
-
-        if ($this->getParam('inline')) {
-            return $minifier->minify();
-        }
-
-        Storage::disk('public')->put(basename($this->getParam('src')), $minifier->minify());
-
-        return config('filesystems.disks.public.url').'/'.basename($this->getParam('src'));
+        return $this->minify('css');
     }
 
     public function js()
     {
-        $path = realpath(public_path($this->getParam('src')));
+        return $this->minify('js');
+    }
 
-        $minifier = new JS($path);
+    protected function minify(string $type)
+    {   
+        $path = realpath(public_path($this->getParam('src')));
+        $filename = basename($this->getParam('src'));
+
+        switch ($type) {
+            case 'css':
+                $minifier = new CSS($path);
+                break;
+
+            case 'js':
+                $minifier = new JS($path);
+                break;
+        }
 
         if ($this->getParam('inline')) {
             return $minifier->minify();
         }
 
-        Storage::disk('public')->put(basename($this->getParam('src')), $minifier->minify());
+        if (! $this->hasBeenUpdated($filename, file_get_contents($path))) {
+            return $this->formUrl($filename);
+        }
 
-        return config('filesystems.disks.public.url').'/'.basename($this->getParam('src'));
+        Storage::disk('public')->put('_minify/'.$filename, $minifier->minify());
+
+        $this->updateAsset($filename, file_get_contents($path));
+
+        return $this->formUrl($filename);
+    }
+
+    protected function hasBeenUpdated(string $key, string $contents)
+    {
+        $storedHash = Cache::get('minify_'.$key);
+        $currentHash = hash('sha256', $contents);
+
+        if (! $storedHash || ! $currentHash) {
+            return true;
+        }
+
+        return $storedHash !== $currentHash;
+    }
+
+    protected function updateAsset(string $key, string $contents)
+    {
+        Cache::put('minify_'.$key, hash('sha256', $contents));
+    }
+
+    protected function formUrl(string $name)
+    {
+        return config('filesystems.disks.public.url').'/_minify/'.$name;
     }
 }
