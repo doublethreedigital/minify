@@ -46,6 +46,15 @@ If you don't want the minified version of your assets to be stored in a file, yo
 <script>{{ minify:js src="js/site.js" inline="true" }}</script>
 ```
 
+### Caching
+This addon makes use of caching so that it doesn't have to re-minify your assets during each page load. Sometimes this can cause issues so we've built a command that clears everything for you.
+
+```
+php please minify:clear
+```
+
+You may also wish to run `php artisan cache:clear` at the same time.
+
 ## Resources
 
 * [Official Support](https://doublethree.digital)
