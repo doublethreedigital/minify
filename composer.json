@@ -1,6 +1,5 @@
 {
     "name": "doublethreedigital/minify",
-    "type": "statamic-addon",
     "description": "Minify JavaScript and CSS on the fly",
     "authors": [
         {
