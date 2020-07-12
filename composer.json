@@ -1,0 +1,55 @@
+{
+    "name": "doublethreedigital/minify",
+    "description": "Minify JavaScript and CSS on the fly",
+    "authors": [
+        {
+            "name": "Duncan McClean",
+            "email": "duncan@doublethree.digital",
+            "homepage": "http://duncanm.dev",
+            "role": "Founder of Double Three Digital"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DoubleThreeDigital\\Minify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DoubleThreeDigital\\Minify\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Minify",
+            "description": "Minify addon"
+        },
+        "laravel": {
+            "providers": [
+                "DoubleThreeDigital\\Minify\\ServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "matthiasmullie/minify": "dev-master",
+        "statamic/cms": "^3.0@beta"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.1"
+    },
+    "minimum-stability": "dev",
+    "scripts": {
+        "lint": [
+            "php-cs-fixer fix ./src"
+        ],
+        "test": [
+            "./vendor/bin/phpunit"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
