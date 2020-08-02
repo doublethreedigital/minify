@@ -43,6 +43,8 @@ class MinifyTagTest extends TestCase
     /** @test */
     public function can_minify_css_stylesheet_and_return_inline()
     {
+        Storage::fake('public');
+
         $this->tag->setParameters(['src' => '/../resources/css/app.css', 'inline' => true]);
         $usage = $this->tag->css();
 
@@ -90,6 +92,8 @@ class MinifyTagTest extends TestCase
     /** @test */
     public function can_minify_js_script_and_return_inline()
     {
+        Storage::fake('public');
+
         $this->tag->setParameters(['src' => '/../resources/js/app.js', 'inline' => true]);
         $usage = $this->tag->js();
 
