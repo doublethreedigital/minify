@@ -81,7 +81,9 @@ class MinifyTag extends Tags
 
         $content = $minifier->minify();
 
-        return "<script>{$content}</script>";
+        return $type === 'css' ? 
+            "<style>{$content}</style>" : 
+            "<script>{$content}</script>";
     }
 
     protected function hasBeenUpdated(string $key, string $contents)

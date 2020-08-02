@@ -8,7 +8,7 @@ use Statamic\Facades\Antlers;
 
 class MinifyTagTest extends TestCase
 {
-    public $tag;
+    public MinifyTag $tag;
 
     public function setUp(): void
     {
@@ -51,6 +51,28 @@ class MinifyTagTest extends TestCase
     }
 
     /** @test */
+    public function can_minify_css_styles_inline()
+    {
+        $this->tag->setParameters([]);
+        $this->tag->setContent("<style>
+            body {
+                background: green;
+                color: yellow;
+            }
+
+            h2 {
+                font-size: 21px;
+            }
+        </style>");
+        $usage = $this->tag->css();
+
+        $this->assertIsString($usage);
+        $this->assertStringContainsString('<style>', $usage);
+        $this->assertStringContainsString('</style>', $usage);
+        $this->assertStringContainsString('body{background:green;color:yellow}h2{font-size:21px}', $usage);
+    }
+
+    /** @test */
     public function can_minify_js_script()
     {
         Storage::fake('public');
@@ -73,5 +95,21 @@ class MinifyTagTest extends TestCase
 
         $this->assertIsString($usage);
         $this->assertStringContainsString('return value};Watcher.prototype.addDep=function addDep(dep){var id=dep.id;', $usage);
+    }
+
+    /** @test */
+    public function can_minify_js_styles_inline()
+    {
+        $this->tag->setParameters([]);
+        $this->tag->setContent("<script>
+            alert('something');
+            console.log('something else');
+        </script>");
+        $usage = $this->tag->js();
+
+        $this->assertIsString($usage);
+        $this->assertStringContainsString('<script>', $usage);
+        $this->assertStringContainsString('</script>', $usage);
+        $this->assertStringContainsString("alert('something');console.log('something else')", $usage);
     }
 }
