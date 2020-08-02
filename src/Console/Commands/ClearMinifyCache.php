@@ -18,6 +18,7 @@ class ClearMinifyCache extends Command
     public function handle()
     {
         $this->info('Clearing your Minify cache..');
+        
         collect(File::allFiles(config('filesystems.disks.public.root').'/_minify/'))
             ->each(function (SplFileInfo $file) {
                 $this->line("Clearing {$this->getFilename()}");
