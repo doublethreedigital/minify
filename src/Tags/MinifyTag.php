@@ -14,7 +14,7 @@ class MinifyTag extends Tags
 
     public function css()
     {
-        if (! $this->getParam('src')) {
+        if (! $this->params->has('src')) {
             return $this->minifyInline('css');
         }
 
@@ -23,7 +23,7 @@ class MinifyTag extends Tags
 
     public function js()
     {
-        if (! $this->getParam('src')) {
+        if (! $this->params->has('src')) {
             return $this->minifyInline('js');
         }
 
@@ -32,8 +32,8 @@ class MinifyTag extends Tags
 
     protected function minify(string $type)
     {   
-        $path = realpath(public_path($this->getParam('src')));
-        $filename = basename($this->getParam('src'));
+        $path = realpath(public_path($this->params->get('src')));
+        $filename = basename($this->params->get('src'));
 
         switch ($type) {
             case 'css':
@@ -45,7 +45,7 @@ class MinifyTag extends Tags
                 break;
         }
 
-        if ($this->getParam('inline')) {
+        if ($this->params->has('inline')) {
             return $minifier->minify();
         }
 
