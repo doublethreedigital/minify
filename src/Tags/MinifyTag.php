@@ -35,10 +35,6 @@ class MinifyTag extends Tags
         $path = realpath(public_path($this->getParam('src')));
         $filename = basename($this->getParam('src'));
 
-        if (! $this->hasBeenUpdated($filename, file_get_contents($path))) {
-            return $this->formUrl($filename, $this->getHash($filename));
-        }
-
         switch ($type) {
             case 'css':
                 $minifier = new CSS($path);
@@ -51,6 +47,10 @@ class MinifyTag extends Tags
 
         if ($this->getParam('inline')) {
             return $minifier->minify();
+        }
+
+        if (! $this->hasBeenUpdated($filename, file_get_contents($path))) {
+            return $this->formUrl($filename, $this->getHash($filename));
         }
 
         Storage::disk('public')->put('_minify/'.$filename, $minifier->minify());
