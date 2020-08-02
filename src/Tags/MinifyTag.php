@@ -4,7 +4,6 @@ namespace DoubleThreeDigital\Minify\Tags;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use MatthiasMullie\Minify\CSS;
 use MatthiasMullie\Minify\JS;
 use Statamic\Tags\Tags;
@@ -43,14 +42,14 @@ class MinifyTag extends Tags
         }
 
         if (! $this->hasBeenUpdated($filename, file_get_contents($path))) {
-            return $this->formUrl($filename);
+            return $this->formUrl($filename, $this->getHash($filename));
         }
 
         Storage::disk('public')->put('_minify/'.$filename, $minifier->minify());
 
         $this->updateAsset($filename, file_get_contents($path));
 
-        return $this->formUrl($filename);
+        return $this->formUrl($filename, $this->getHash($filename));
     }
 
     protected function hasBeenUpdated(string $key, string $contents)
@@ -70,8 +69,13 @@ class MinifyTag extends Tags
         Cache::put('minify_'.$key, hash('sha256', $contents));
     }
 
-    protected function formUrl(string $name)
+    protected function getHash(string $key)
     {
-        return config('filesystems.disks.public.url').'/_minify/'.$name;
+        return Cache::get('minify_'.$key);
+    }
+
+    protected function formUrl(string $name, string $hash)
+    {
+        return config('filesystems.disks.public.url').'/_minify/'.$name.'?version='.$hash;
     }
 }
