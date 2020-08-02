@@ -36,7 +36,7 @@ class MinifyTagTest extends TestCase
         Storage::disk('public')->assertExists('_minify/app.css');
 
         $this->assertIsString($usage);
-        $this->assertSame($usage, '/storage/_minify/app.css');
+        $this->assertStringContainsString('/storage/_minify/app.css?version=', $usage);
         $this->assertSame(Storage::disk('public')->get('_minify/app.css'), file_get_contents(__DIR__.'/__fixtures__/comparison/app.css'));
     }
 
@@ -61,7 +61,7 @@ class MinifyTagTest extends TestCase
         Storage::disk('public')->assertExists('_minify/app.js');
 
         $this->assertIsString($usage);
-        $this->assertSame($usage, '/storage/_minify/app.js');
+        $this->assertStringContainsString('/storage/_minify/app.js?version=', $usage);
         $this->assertSame(Storage::disk('public')->get('_minify/app.js'), file_get_contents(__DIR__.'/__fixtures__/comparison/app.js'));
     }
 
