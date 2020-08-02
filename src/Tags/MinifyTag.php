@@ -14,11 +14,19 @@ class MinifyTag extends Tags
 
     public function css()
     {
+        if (! $this->getParam('src')) {
+            return $this->minifyInline('css');
+        }
+
         return $this->minify('css');
     }
 
     public function js()
     {
+        if (! $this->getParam('src')) {
+            return $this->minifyInline('js');
+        }
+
         return $this->minify('js');
     }
 
@@ -50,6 +58,30 @@ class MinifyTag extends Tags
         $this->updateAsset($filename, file_get_contents($path));
 
         return $this->formUrl($filename, $this->getHash($filename));
+    }
+
+    protected function minifyInline(string $type)
+    {
+        $filename = '_minify/'.uniqid();
+        $path = config('filesystems.disks.public.root').'/'.$filename;
+
+        $content = strip_tags($this->content);
+
+        Storage::disk('public')->put($filename, $content);
+
+        switch ($type) {
+            case 'css':
+                $minifier = new CSS($path);
+                break;
+
+            case 'js':
+                $minifier = new JS($path);
+                break;
+        }
+
+        $content = $minifier->minify();
+
+        return "<script>{$content}</script>";
     }
 
     protected function hasBeenUpdated(string $key, string $contents)

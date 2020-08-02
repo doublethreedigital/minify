@@ -15,7 +15,6 @@ This addon minifies your site's CSS & JavaScript when they change. All you need 
 Minify only minifies the files, it doesn't handle your build process for you. We'd recommend using [Laravel Mix](https://laravel.com/docs/7.x/mix#introduction) for that.
 
 ### CSS
-
 To pull in a stylesheet, use the `minify:css` tag. Remember to include the `src`, the value of which should be the relative path to your CSS file from your project's `public` directory.
 
 ```antlers
@@ -25,7 +24,6 @@ To pull in a stylesheet, use the `minify:css` tag. Remember to include the `src`
 This above example would minify the existing `public/css/site.css` file, save it and serve it to the user.
 
 ### JavaScript
-
 To pull in a script, use the `minify:js` tag. Like the CSS tag, remember to include the `src` parameter, the value of which should be the relative path to your JavaScript file from your project's `public` directory.
 
 ```antlers
@@ -35,7 +33,6 @@ To pull in a script, use the `minify:js` tag. Like the CSS tag, remember to incl
 > Minify has been known to have issues with some ES6 JavaScript stuff, please verify your site works before shipping to production.
 
 ### Inline assets
-
 If you don't want the minified version of your assets to be stored in a file, you can get the contents of the minification inline.
 
 ```html
@@ -46,6 +43,20 @@ If you don't want the minified version of your assets to be stored in a file, yo
 <script>{{ minify:js src="js/site.js" inline="true" }}</script>
 ```
 
+### Minify inline scripts
+Sometimes you want to just add scripts to your HTML without using seperate files. The good news is that this addon can minify those as well! Here's a JavaScript example
+
+```html
+{{ minify:js }}
+    <script>
+        alert('Yo! How you doin');
+    </script>
+{{ /minify:js }}
+```
+
+And of course it will work the same way if you use the `{{ minfify:css }}` tag.
+
+
 ### Caching
 This addon makes use of caching so that it doesn't have to re-minify your assets during each page load. Sometimes this can cause issues so we've built a command that clears everything for you.
 
@@ -54,6 +65,11 @@ php please minify:clear
 ```
 
 You may also wish to run `php artisan cache:clear` at the same time.
+
+### Troubleshooting
+To do the minification of JavaScript and CSS, we use [`matthiasmullie/minify`](https://github.com/matthiasmullie/minify). It's sometimes a bit problematic when dealing with newer JavaScript standards. For example, you might find that minification doesn't work as expected for lines without a semicolon `;` at the end.
+
+For the moment, it's a bit of a limitation. However, we're planning on moving to another package in the future.
 
 ## Resources
 
