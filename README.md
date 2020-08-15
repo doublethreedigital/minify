@@ -1,14 +1,15 @@
 # Minify
 > Minify your site's CSS & JavaScript when they change
 
-This addon minifies your site's CSS & JavaScript when they change. All you need to do is change the code that pulls in your assets.
+This addon minifies your site's CSS & JavaScript when they change. All you need to do is change the code that pulls in your assets. This addon also now lets you minify the HTML served to your users.
 
 ![Little example](./code-example.png)
 
 ## Installation
+Please bear in mind, Minify requires PHP 7.4 or higher.
 
 1. Install via Composer - `composer require doublethreedigital/minify`
-2. Replace your style and script paths with the Minify replacements
+2. Read below documentation on how to implement this addon in your site.
 
 ## Usage
 
@@ -31,6 +32,22 @@ To pull in a script, use the `minify:js` tag. Like the CSS tag, remember to incl
 ```
 
 > Minify has been known to have issues with some ES6 JavaScript stuff, please verify your site works before shipping to production.
+
+### HTML
+
+Minify can now automatically minify the HTML served to your users in Statamic front-end requests. To enable, just add the `HtmlMinification` middleware to the `web` middleware group in your `App\Http\Kernal` file.
+
+```
+protected $middlewareGroups = [
+    'web' => [
+        ...
+
+        \DoubleThreeDigital\Minify\Http\Middleware\HtmlMinification::class,
+    ],
+
+    ...
+];
+```
 
 ### Inline assets
 If you don't want the minified version of your assets to be stored in a file, you can get the contents of the minification inline.
