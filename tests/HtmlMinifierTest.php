@@ -26,10 +26,7 @@ class HtmlMinifierTest extends TestCase
         $minifier = new Html([]);
         $minify = $minifier->minify($htmlString);
 
-        // dd($minify);
-
         $this->assertIsString($minify);
         $this->assertStringContainsString('<html><head><title>Test</title><link rel="stylesheet" href="smth.css"></head> <body><h1>Test</h1> <script src="smth.js"', $minify);
-        // $this->assertStringContainsString('<script>\n', $minify);
     }
 }
