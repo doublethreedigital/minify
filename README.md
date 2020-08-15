@@ -6,6 +6,7 @@ This addon minifies your site's CSS & JavaScript when they change. All you need 
 ![Little example](./code-example.png)
 
 ## Installation
+Please bear in mind, Minify requires PHP 7.4 or higher.
 
 1. Install via Composer - `composer require doublethreedigital/minify`
 2. Read below documentation on how to implement this addon in your site.
