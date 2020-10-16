@@ -3,7 +3,7 @@
 
 This addon minifies your site's CSS & JavaScript when they change. All you need to do is change the code that pulls in your assets. This addon also now lets you minify the HTML served to your users.
 
-![Little example](./code-example.png)
+![Little example](https://raw.githubusercontent.com/doublethreedigital/minify/master/code-example.png)
 
 ## Installation
 Please bear in mind, Minify requires PHP 7.4 or higher.
