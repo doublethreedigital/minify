@@ -38,7 +38,7 @@ To pull in a script, use the `minify:js` tag. Like the CSS tag, remember to incl
 
 Minify can now automatically minify the HTML served to your users in Statamic front-end requests. To enable, just add the `HtmlMinification` middleware to the `web` middleware group in your `App\Http\Kernal` file.
 
-```
+```php
 protected $middlewareGroups = [
     'web' => [
         ...
