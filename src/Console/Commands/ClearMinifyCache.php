@@ -21,7 +21,7 @@ class ClearMinifyCache extends Command
         
         collect(File::allFiles(config('filesystems.disks.public.root').'/_minify/'))
             ->each(function (SplFileInfo $file) {
-                $this->line("Clearing {$this->getFilename()}");
+                $this->line("Clearing {$file->getFilename()}");
                 File::delete($file);
                 Cache::forget($file->getFilename());
             });
