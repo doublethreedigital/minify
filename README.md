@@ -5,6 +5,8 @@ This addon minifies your site's CSS & JavaScript when they change. All you need 
 
 ![Little example](https://raw.githubusercontent.com/doublethreedigital/minify/master/code-example.png)
 
+While Minify itself is free and doesn't require a license, you can [optionally donate to Duncan](https://duncanm.dev/donate), the developer behind it to show your appreciation.
+
 ## Installation
 Please bear in mind, Minify requires PHP 7.4 or higher.
 
