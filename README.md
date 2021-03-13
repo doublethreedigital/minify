@@ -1,6 +1,8 @@
 # Minify
 > Minify your site's CSS & JavaScript when they change
 
+**This addon has been retired and will no longer receive updates. Please find an alternative.**
+
 This addon minifies your site's CSS & JavaScript when they change. All you need to do is change the code that pulls in your assets. This addon also now lets you minify the HTML served to your users.
 
 ![Little example](https://raw.githubusercontent.com/doublethreedigital/minify/master/code-example.png)
