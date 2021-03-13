@@ -1,6 +1,8 @@
 # Minify
 > Minify CSS & JS assets on the fly
 
+This addon has been retired and will no longer receive updates. Please find an alternative.
+
 * Minify JavaScript
 * Minify Stylesheets
 
